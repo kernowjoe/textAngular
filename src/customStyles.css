@@ -1,11 +1,13 @@
-.wysiwyg-justify-right {
-	text-align:right;
-}
-
-.wysiwyg-justify-left {
+/* Blocks */
+.wysiwyg-block-align-left {
 	text-align: left;
 }
-
-.wysiwyg-justify-center {
+.wysiwyg-block-align-center {
 	text-align: center;
+}
+.wysiwyg-block-align-right {
+	text-align: right;
+}
+.wysiwyg-block-align-justify {
+	text-align: justify;
 }

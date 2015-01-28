@@ -13,7 +13,7 @@ angular.module('textAngularSetup', [])
 		toolbar: [
 			['h1', 'h2', 'h3', 'h4', 'h5', 'p', 'pre', 'quote'],
 			['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
-			['justifyLeft','justifyCenter','justifyRight','indent','outdent'],
+			['justifyLeft','justifyCenter','justifyRight', 'justify','indent','outdent'],
 			['html', 'insertImage', 'insertLink', 'insertVideo', 'wordcount', 'charcount']
 		],
 		classes: {
@@ -132,6 +132,9 @@ angular.module('textAngularSetup', [])
 		},
 		justifyCenter: {
 			tooltip: 'Center'
+		},
+		justify: {
+			tooltip: 'Justify'
 		},
 		indent: {
 			tooltip: 'Increase indent'
@@ -278,10 +281,10 @@ angular.module('textAngularSetup', [])
 			iconclass: 'fa fa-align-left',
 			tooltiptext: taTranslations.justifyLeft.tooltip,
 			action: function(){
-				return this.$editor().addCssToSelection("wysiwyg-justify-left", ['wysiwyg-justify-center', 'wysiwyg-justify-right']);
+				return this.$editor().addCssToSelection("wysiwyg-block-align-left", ['wysiwyg-block-align-center', 'wysiwyg-block-align-right', 'wysiwyg-block-align-justify']);
 			},
 			activeState: function(commonElement){
-				return this.$editor().selectedHasClass("wysiwyg-justify-left", true);
+				return this.$editor().selectedHasClass("wysiwyg-block-align-left", true);
 
 			}
 		});
@@ -289,11 +292,11 @@ angular.module('textAngularSetup', [])
 			iconclass: 'fa fa-align-right',
 			tooltiptext: taTranslations.justifyRight.tooltip,
 			action: function(){
-				return this.$editor().addCssToSelection("wysiwyg-justify-right", ['wysiwyg-justify-center', 'wysiwyg-justify-left']);
+				return this.$editor().addCssToSelection("wysiwyg-block-align-right", ['wysiwyg-block-align-center', 'wysiwyg-block-align-left', 'wysiwyg-block-align-justify']);
 
 			},
 			activeState: function(){
-				return this.$editor().selectedHasClass("wysiwyg-justify-right");
+				return this.$editor().selectedHasClass("wysiwyg-block-align-right");
 
 			}
 		});
@@ -301,10 +304,21 @@ angular.module('textAngularSetup', [])
 			iconclass: 'fa fa-align-center',
 			tooltiptext: taTranslations.justifyCenter.tooltip,
 			action: function(){
-				return this.$editor().addCssToSelection("wysiwyg-justify-center", ['wysiwyg-justify-right', 'wysiwyg-justify-left']);
+				return this.$editor().addCssToSelection("wysiwyg-block-align-center", ['wysiwyg-block-align-right', 'wysiwyg-block-align-left', 'wysiwyg-block-align-justify']);
 			},
 			activeState: function(){
-				return this.$editor().selectedHasClass("wysiwyg-justify-center");
+				return this.$editor().selectedHasClass("wysiwyg-block-align-center");
+
+			}
+		});
+		taRegisterTool('justify', {
+			iconclass: 'fa fa-align-justify',
+			tooltiptext: taTranslations.justify.tooltip,
+			action: function(){
+				return this.$editor().addCssToSelection("wysiwyg-block-align-justify", ['wysiwyg-block-align-right', 'wysiwyg-block-align-left', 'wysiwyg-block-align-center']);
+			},
+			activeState: function(){
+				return this.$editor().selectedHasClass("wysiwyg-block-align-justify");
 
 			}
 		});
