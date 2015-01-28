@@ -190,9 +190,9 @@ angular.module('textAngularSetup', [])
 			return faked.charAt(0) + (parseInt(faked.charAt(1)) + 1)
 		};
 
-		var _retActiveStateFunction = function(q){
+		var _retActiveStateFunction = function(header){
 
-			var real = returnRealHeader(g);
+			var real = returnRealHeader(header);
 			return function(){ return this.$editor().queryFormatBlockState(real); };
 		};
 		var headerAction = function(){
@@ -200,12 +200,12 @@ angular.module('textAngularSetup', [])
 
 			return this.$editor().wrapSelection("formatBlock", "<" + real.toUpperCase() +">");
 		};
-		angular.forEach(['h1','h2','h3','h4','h5'], function(h){
-			taRegisterTool(h.toLowerCase(), {
-				buttontext: h.toUpperCase(),
-				tooltiptext: taTranslations.heading.tooltip + h.charAt(1),
+		angular.forEach(['h1','h2','h3','h4','h5'], function(header){
+			taRegisterTool(header.toLowerCase(), {
+				buttontext: header.toUpperCase(),
+				tooltiptext: taTranslations.heading.tooltip + header.charAt(1),
 				action: headerAction,
-				activeState: _retActiveStateFunction(h.toLowerCase())
+				activeState: _retActiveStateFunction(header.toLowerCase())
 			});
 		});
 		taRegisterTool('p', {
