@@ -186,13 +186,19 @@ angular.module('textAngularSetup', [])
 		});
 		// add the Header tools
 		// convenience functions so that the loop works correctly
+		var returnRealHeader = function(faked) {
+			return faked.charAt(0) + (parseInt(faked.charAt(1)) + 1)
+		};
+
 		var _retActiveStateFunction = function(q){
-			return function(){ return this.$editor().queryFormatBlockState(q); };
+
+			var real = returnRealHeader(g);
+			return function(){ return this.$editor().queryFormatBlockState(real); };
 		};
 		var headerAction = function(){
-			var block = this.name.charAt(0) + (parseInt(this.name.charAt(1)) + 1);
+			var real = returnRealHeader(this.name);
 
-			return this.$editor().wrapSelection("formatBlock", "<" + block.toUpperCase() +">");
+			return this.$editor().wrapSelection("formatBlock", "<" + real.toUpperCase() +">");
 		};
 		angular.forEach(['h1','h2','h3','h4','h5'], function(h){
 			taRegisterTool(h.toLowerCase(), {
