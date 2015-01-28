@@ -1652,7 +1652,7 @@ textAngular.directive("textAngular", [
 					_originalContents, _toolbars,
 					_serial = (attrs.serial) ? attrs.serial : Math.floor(Math.random() * 10000000000000000),
 					_taExecCommand, _resizeMouseDown;
-				
+
 				scope._name = (attrs.name) ? attrs.name : 'textAngularEditor' + _serial;
 
 				var oneEvent = function(_element, event, action){
@@ -1685,6 +1685,30 @@ textAngular.directive("textAngular", [
 							// You still have focus on the text/html input it just doesn't show up
 							scope.displayElements.text[0].focus();
 						}
+					},
+					addCssToSelection : function(style, stylesToRemove) {
+
+						var element = angular.element(taSelection.getSelectionElement());
+
+						element.toggleClass(style);
+
+						if(stylesToRemove) {
+
+							angular.forEach(stylesToRemove, function(styleToRemove) {
+
+								element.removeClass(styleToRemove);
+							});
+						}
+					},
+					selectedHasClass : function(style, allowNull) {
+						var element = angular.element(taSelection.getSelectionElement()),
+							result = element.hasClass(style);
+
+						if (allowNull) {
+							return result || !element.attr("class")
+						}
+
+						return result;
 					},
 					showHtml: scope.$eval(attrs.taShowHtml) || false
 				});
@@ -1810,7 +1834,7 @@ textAngular.directive("textAngular", [
 								x: Math.max(0, startPosition.width + (event.clientX - startPosition.x)),
 								y: Math.max(0, startPosition.height + (event.clientY - startPosition.y))
 							};
-							
+
 							if(event.shiftKey){
 								// keep ratio
 								var newRatio = pos.y / pos.x;
@@ -1820,7 +1844,7 @@ textAngular.directive("textAngular", [
 							el = angular.element(_el);
 							el.attr('height', Math.max(0, pos.y));
 							el.attr('width', Math.max(0, pos.x));
-							
+
 							// reflow the popover tooltip
 							scope.reflowResizeOverlay(_el);
 						};
@@ -1863,12 +1887,12 @@ textAngular.directive("textAngular", [
 				});
 				scope.displayElements.scrollWindow.attr({'ng-hide': 'showHtml'});
 				if(attrs.taDefaultWrap) scope.displayElements.text.attr('ta-default-wrap', attrs.taDefaultWrap);
-				
+
 				if(attrs.taUnsafeSanitizer){
 					scope.displayElements.text.attr('ta-unsafe-sanitizer', attrs.taUnsafeSanitizer);
 					scope.displayElements.html.attr('ta-unsafe-sanitizer', attrs.taUnsafeSanitizer);
 				}
-				
+
 				// add the main elements to the origional element
 				scope.displayElements.scrollWindow.append(scope.displayElements.text);
 				element.append(scope.displayElements.scrollWindow);
@@ -2302,7 +2326,7 @@ textAngular.service('textAngularManager', ['taToolExecuteAction', 'taTools', 'ta
 										break;
 									}
 								}
-								if(result) break; 
+								if(result) break;
 							}
 						}
 						return result;
@@ -2464,10 +2488,10 @@ textAngular.directive('textAngularToolbar', [
 						toolElement = angular.element(toolDefinition.display);
 					}
 					else toolElement = angular.element("<button type='button'>");
-					
+
 					if(toolDefinition && toolDefinition["class"]) toolElement.addClass(toolDefinition["class"]);
 					else toolElement.addClass(scope.classes.toolbarButton);
-					
+
 					toolElement.attr('name', toolScope.name);
 					// important to not take focus from the main text/html entry
 					toolElement.attr('unselectable', 'on');
